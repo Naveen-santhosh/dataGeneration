@@ -1,12 +1,13 @@
-import random
 import datetime
-import pandas as pd
-import names
-import xlsxwriter
+import random
 import string
-from random import shuffle
-from random import randrange
 from datetime import timedelta
+from random import randrange, shuffle
+import os
+import names
+import pandas as pd
+import xlsxwriter
+
 
 class DataGenerator:
     global count
@@ -73,28 +74,11 @@ class DataGenerator:
 
 
 
-
-    #    print("performing the deed" )
-    #    for i in range(0,len(columns)):
-    #        self.data_corrupt = self.data[columns[i]].sample(frac=frac)
-    #        for k in range (0,random.randint(0, len(data_corrupt))):
-    #            self.data_corrupt.iloc[k,] = random.choice(self.cor)
-    #        self.data.update(self.data_corrupt, join='left', overwrite=True, filter_func=None, errors='ignore')     
-    #    print(self.data)
-    #    return self.data
-
-
-
-
 class DataExporter:
     
      
 
     def __init__(self):
-        pass
-
-    
-    def createfile(self):
         pass
 
     def compiledata(self,data,columns):
@@ -108,14 +92,18 @@ class DataExporter:
         return self.dictionary
         
     def exportdata(self,path):
-        df = pd.DataFrame.from_dict(self.dictionary, orient='index')
+        df = pd.DataFrame.from_dict(self.dictionary, orient='columns')
         print(df)
         with pd.ExcelWriter(path) as writer :
             print(writer)
             df.to_excel(writer)
 
-
-
+    def clearop(self,path):
+        if os.path.exists(path):
+            os.remove(path)
+            print("Successfully! The File has been removed")
+        else:
+            print("Can not delete the file as it doesn't exists")
 
 
 
